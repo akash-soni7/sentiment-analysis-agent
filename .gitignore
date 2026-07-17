@@ -11,6 +11,3 @@ db.sqlite3
 
 # VS Code
 .vscode/
-
-# OS
-.DS_Store
