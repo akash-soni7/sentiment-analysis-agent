@@ -1,20 +1,23 @@
+import os
 # pyrefly: ignore [missing-import]
-from transformers import pipeline
+import google.generativeai as genai
+# pyrefly: ignore [missing-import]
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class ModelLoader:
-    _classifier = None
+
+    _model = None
 
     @classmethod
-    def get_classifier(cls):
-        if cls._classifier is None:
-            print("Loading sentiment model...")
+    def get_model(cls):
 
-            cls._classifier = pipeline(
-                task="sentiment-analysis",
-                model="distilbert-base-uncased-finetuned-sst-2-english"
-            )
+        if cls._model is None:
 
-            print("Model loaded successfully!")
+            genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-        return cls._classifier
+            cls._model = genai.GenerativeModel("gemini-2.5-flash")
+
+        return cls._model
